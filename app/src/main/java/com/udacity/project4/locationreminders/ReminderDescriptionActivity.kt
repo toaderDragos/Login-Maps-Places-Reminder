@@ -32,7 +32,7 @@ class ReminderDescriptionActivity : AppCompatActivity() {
             this,
             R.layout.activity_reminder_description
         )
-        //  Implementation of the reminder details activity   
+        //  Implementation of the reminder details activity. Get serializable may be deprecated - should check   
         val reminderDataItem = intent.getSerializableExtra(EXTRA_ReminderDataItem) as ReminderDataItem
         binding.reminderDataItem = reminderDataItem
         
