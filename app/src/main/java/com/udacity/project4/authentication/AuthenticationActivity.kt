@@ -14,6 +14,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.udacity.project4.R
+import com.udacity.project4.locationreminders.RemindersActivity
 
 /**
  * This class should be the starting point of the app, It asks the users to sign in / register, and redirects the
@@ -28,7 +29,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     // Get a reference to the ViewModel scoped to this Fragment.
     private val viewModel by viewModels<AuthenticationViewModel>()
-    private lateinit var navController: NavController
     lateinit var loginButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,26 +36,23 @@ class AuthenticationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authentication)
 
         loginButton = findViewById(R.id.loginButton)
-//         TODO: Implement the create account and sign in using FirebaseUI, use sign in using email and sign in using Google
+        // Implement the create account and sign in using FirebaseUI, use sign in using email and sign in using Google
         loginButton.setOnClickListener { launchSignInFlow() }
-
-//          TODO: If the user was authenticated, send him to RemindersActivity
-        navController = findNavController(this, R.id.nav_controller_view_tag)
 
         // Observe the authentication state so we can know if the user has logged in successfully.
         // If the user has logged in successfully, bring them back to the settings screen.
         // If the user did not log in successfully, display an error message.
-        viewModel.authenticationState.observe(this, Observer { authenticationState ->
+        viewModel.authenticationState.observe(this) { authenticationState ->
             if (authenticationState == AuthenticationViewModel.AuthenticationState.AUTHENTICATED) {
-                navController.popBackStack()
-                navController.navigate(R.id.mainActivity)}
-
-                else { Log.e(TAG,
+                intent = Intent(applicationContext, RemindersActivity::class.java)
+                startActivity(intent)
+            } else {
+                Log.e(
+                    TAG,
                     "Authentication state that doesn't require any UI change $authenticationState"
                 )
             }
-        })
-
+        }
 
 //          TODO: a bonus is to customize the sign in flow to look nice using :
         //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#custom-layout
@@ -63,7 +60,7 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun launchSignInFlow() {
-        // Give users the option to sign in / register with their email or Google account. If users
+        // Gives the users the option to sign in / register with their email or Google account. If users
         // choose to register with their email, they will need to create a password as well.
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
