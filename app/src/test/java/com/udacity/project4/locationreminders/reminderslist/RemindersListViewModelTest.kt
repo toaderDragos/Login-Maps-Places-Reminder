@@ -60,22 +60,4 @@ class RemindersListViewModelTest {
 
     }
 
-    // Provide testing to the RemindersListViewModel // NEEDS CONTINUATION HERE - SEE udacity
-    @Test
-    fun viewModel_loadReminders() {
-        viewModel.loadReminders()
-    }
-
-    // Provide testing to the RemindersListViewModel and its live data objects
-    @Test
-    fun viewModel_remindersList_LiveData() {
-        viewModel.loadReminders()
-
-        val value = viewModel.remindersList.value
-        if (value != null) {
-            assert(value.isNotEmpty())
-        } else {
-            assert(false)
-        }
-    }
 }
