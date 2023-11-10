@@ -7,5 +7,4 @@ It uses Google Maps API, Geofences, Repository, ViewModel, Jetpack Libraries, et
 
 Written for Android/Kotlin in MVVM architecture.  
 
-There is still some testing of the viewModel that I need to implement.  
 
